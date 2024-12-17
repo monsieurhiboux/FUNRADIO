@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUN RADIO</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script defer src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script defer src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="bg-gray-900 text-gray-200 font-sans">
+    <!-- Conteneur principal -->
+    <div class="flex flex-col md:flex-row max-h-screen">
+        <!-- Sidebar gauche -->
+        <aside class="w-64 bg-gray-800 p-4">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-purple-400">FUN RADIO</h1>
+            </div>
+            <nav>
+                <ul class="space-y-4">
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
+                            <span class="w-6 h-6 bg-gray-600 flex items-center justify-center rounded">🏠</span>
+                            <span>Accueil</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
+                            <span class="w-6 h-6 bg-gray-600 flex items-center justify-center rounded">🎥</span>
+                            <span>Vidéos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
+                            <span class="w-6 h-6 bg-gray-600 flex items-center justify-center rounded">🗓️</span>
+                            <span>Planning</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
+                            <span class="w-6 h-6 bg-gray-600 flex items-center justify-center rounded">💬</span>
+                            <span>Chat</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenu principal -->
+        <main class="flex bg-gray-900 flex-1">
+            <!-- Image dynamique en React -->
+            <!-- Infos sur le stream -->
+            <div class="p-4 border-b border-gray-700 flex-1 grow">
+                <div id="imageApp" class="aspect-video"></div>
+                <div class="flex flex-col md:flex-row md:items-center justify-between mt-3">
+                    <div>
+                        <h2 class="text-2xl font-bold text-purple-400">FUN RADIO LIVE 24h/24 🔴</h2>
+                        <p id="viewCount" class="text-gray-400">RADIO | FUN RADIOFUN FUNRADIO RADIO INSUPPORTABLE | Nombre de vues : 1000</p>
+                    </div>
+                    <button class="mt-4 md:mt-0 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500">
+                        Suivre
+                    </button>
+                </div>
+                <div class="audio-player mt-4">
+                    <audio id="audioPlayer" controls autoplay ></audio>
+                </div>
+            </div>
+
+            <!-- Chat et contenus liés -->
+            <div class="w-96 p-4 none mr-auto">
+                <!-- Chat avec React --> 
+                <div id="chatApp" class="bg-gray-800 p-4 rounded min-h-screen overflow-y-auto">
+    </div>
+
+    <script type="text/babel">
+        const messages = [
+            { pseudo: "DJMax", text: "Salut tout le monde!" },
+            { pseudo: "FanDeHits", text: "Génial ce stream!" },
+            { pseudo: "MusicLover87", text: "Quelqu'un a le nom de la musique?" },
+            { pseudo: "DanceFloorKing", text: "Let's gooooo 🔥" },
+            { pseudo: "HitHunter", text: "Incroyable !" }
+        ];
+
+        function ChatApp() {
+            const [chatMessages, setChatMessages] = React.useState([]);
+            React.useEffect(() => {
+                const interval = setInterval(() => {
+                    const newMessage = messages[Math.floor(Math.random() * messages.length)];
+                    setChatMessages(prev => [
+                        ...prev.slice(-15),
+                        `${newMessage.pseudo} : ${newMessage.text}`
+                    ]);
+                }, 800);
+                return () => clearInterval(interval);
+            }, []);
+
+            return (
+                <div>
+                    <h3 className="text-lg font-bold mb-4 text-purple-400">Chat en direct</h3>
+                    <div className="flex-1 overflow-y-auto bg-gray-900 p-2 rounded">
+                        {chatMessages.map((msg, index) => (
+                            <div key={index} className="text-gray-400">{msg}</div>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
+
+        function ImageApp() {
+            const images = [
+                "assets/fun1.png",
+                "assets/fun2.png",
+                "assets/fun3.png"
+            ];
+            const [currentImage, setCurrentImage] = React.useState(images[0]);
+            React.useEffect(() => {
+                let index = 0;
+                const interval = setInterval(() => {
+                    index = (index + 1) % images.length;
+                    setCurrentImage(images[index]);
+                }, 2000);
+                return () => clearInterval(interval);
+            }, []);
+            return <img src={currentImage} className="w-full h-full object-cover" alt="Image dynamique" />;
+        }
+
+        function ViewCount() {
+            const [views, setViews] = React.useState(1000);
+            React.useEffect(() => {
+                const interval = setInterval(() => {
+                    setViews(prev => prev + 1);
+                }, 1000);
+                return () => clearInterval(interval);
+            }, []);
+
+            return (
+                <p id="viewCount" className="text-gray-400">RADIO | FUN RADIO | Nombre de vues : {views}</p>
+            );
+        }
+
+         // Audio playlist functionality
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playlist = [
+            'assets/audio1.mp3',
+            'assets/audio2.mp3'
+        ];
+        let currentTrack = 0;
+
+        function loadTrack(index) {
+            audioPlayer.src = playlist[index];
+            audioPlayer.play();
+        }
+
+        audioPlayer.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % playlist.length;
+            loadTrack(currentTrack);
+        });
+
+        // Load and start the first track
+        loadTrack(currentTrack);
+
+        ReactDOM.render(<ChatApp />, document.getElementById('chatApp'));
+        ReactDOM.render(<ImageApp />, document.getElementById('imageApp'));
+        ReactDOM.render(<ViewCount />, document.querySelector('#viewCount'));
+    </script>
+</body>
+</html>
