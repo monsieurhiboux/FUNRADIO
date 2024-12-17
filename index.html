@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FUN RADIO</title>
+    <title>PUFF RADIO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script defer src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
@@ -15,7 +15,7 @@
         <!-- Sidebar gauche -->
         <div class="flex flex-col min-h-screen w-38 bg-gray-800 p-4">
             <div class="mb-6">
-                <h1 class="text-2xl font-bold text-purple-400">FUN RADIO</h1>
+                <h1 class="text-2xl font-bold text-purple-400">PUFF RADIO</h1>
             </div>
             <nav>
                 <ul class="space-y-4">
@@ -58,8 +58,8 @@
                 </div>
                 <div class="flex flex-col md:flex-row md:items-center justify-between mt-3 border-b border-gray-700 m-4 pb-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-purple-400">FUN RADIO LIVE 24h/24 🔴</h2>
-                        <p class="text-gray-400">RADIO | FUN RADIOFUN FUNRADIO RADIO INSUPPORTABLE | Nombre de viewers : <span class="font-bold text-purple-400" id="viewCount">1000</span> </p>
+                        <h2 class="text-2xl font-bold text-purple-400">PUFF RADIO LIVE 24h/24 🔴</h2>
+                        <p class="text-gray-400">RADIO | PUFF RADIOPUFF PUFFRADIO RADIO INSUPPORTABLE | Nombre de viewers : <span class="font-bold text-purple-400" id="viewCount">1000</span> </p>
                     </div>
                     <button class="mt-4 md:mt-0 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500">
                         Vous êtes abonné·e à FUN RADIO
@@ -272,6 +272,13 @@
                 }
             };
 
+            const changeRandomTrack = () => {
+                const randomTrack = Math.floor(Math.random() * playlist.length);
+                setCurrentTrack(randomTrack);
+                const randomStartTime = Math.random() * audioRef.current.duration;
+                audioRef.current.currentTime = randomStartTime;
+            };
+
             return (
                 <div className="audio-player mt-4">
                     <audio
@@ -284,6 +291,12 @@
                         className="mt-4 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500"
                     >
                         {isPlaying ? "🔇 Couper le son" : "🔈 Lancer le son"}
+                    </button>
+                    <button
+                        onClick={changeRandomTrack}
+                        className="mt-4 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500 ml-3"
+                    >
+                        Changer de ligne temporelle
                     </button>
                     <input
                         type="range"
