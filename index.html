@@ -12,9 +12,9 @@
 </head>
 <body class="bg-gray-900 text-gray-200 font-sans min">
     <!-- Conteneur principal -->
-    <div class="flex min-h-scren">
-        <!-- Sidebar gauche -->
-        <div class="flex flex-col min-h-screen w-38 bg-gray-800 p-4">
+    <div class="flex flex-col lg:flex-row min-h-screen">
+        <!-- Sidebar gauche - Visible uniquement sur desktop -->
+        <div class="hidden lg:flex flex-col w-38 bg-gray-800 p-4">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-purple-400">PUFF RADIO</h1>
             </div>
@@ -49,30 +49,29 @@
         </div>
 
         <!-- Contenu principal -->
-        <div class="flex bg-gray-900 flex-1">
-            <!-- Image dynamique en React -->
+        <div class="flex flex-col flex-1">
+            <!-- Image dynamique et audio player -->
+            <div class="relative">
+                <div id="imageApp" class="aspect-video"></div>
+                <div id="audioPlayerContainer" class="absolute bottom-4 left-4"></div>
+            </div>
+
             <!-- Infos sur le stream -->
-            <div class="flex-1 grow">
-                <div class="relative">
-                    <div id="imageApp" class="aspect-video"></div>
-                    <div id="audioPlayerContainer" class="absolute bottom-4 left-4"></div>
-                </div>
-                <div class="flex flex-col md:flex-row md:items-center justify-between mt-3 border-b border-gray-700 m-4 pb-4">
-                    <div>
-                        <h2 class="text-2xl font-bold text-purple-400">PUFF RADIO LIVE 24h/24 🔴</h2>
-                        <p class="text-gray-400">RADIO | PUFF RADIOPUFF PUFFRADIO RADIO INSUPPORTABLE | Nombre de viewers : <span class="font-bold text-purple-400" id="viewCount">1000</span> </p>
-                    </div>
-                    <button class="mt-4 md:mt-0 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500">
-                        Vous êtes abonné·e à PUFF RADIO
-                    </button>
-                </div>
+            <div class="p-4">
+                <h2 class="text-2xl font-bold text-purple-400 text-center lg:text-left">PUFF RADIO LIVE 24h/24 🔴</h2>
+                <p class="text-gray-400 text-center lg:text-left">
+                    RADIO | PUFF RADIO | Nombre de viewers :
+                    <span class="font-bold text-purple-400" id="viewCount">1000</span>
+                </p>
             </div>
         </div>
-        <div class="w-96 none">
-            <!-- Chat avec React --> 
-            <div id="chatApp"></div>
+
+        <!-- Emplacement pour React ChatApp - Desktop -->
+        <div class="hidden lg:block w-96 border-l border-gray-700">
+            <div id="chatContainer"></div>
         </div>
     </div>
+
 
 
     <script type="text/babel">
@@ -253,7 +252,7 @@
             };
 
             return (
-                <div className="audio-player mt-4">
+                <div className="audio-player mt-4 lg:inline-flex items-center">
                     <audio
                         ref={audioRef}
                         onEnded={handleEnded}
@@ -271,22 +270,24 @@
                     >
                         ⏱️ Changer de ligne temporelle
                     </button>
-                    🔊
-                    <input
-                        type="range"
-                        min="0"
-                        max="1"
-                        step="0.01"
-                        value={volume}
-                        onChange={handleVolumeChange}
-                        className="ml-3"
-                    />
+                    <div className="mt-4 lg:mt-'">
+                        🔊
+                        <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={volume}
+                            onChange={handleVolumeChange}
+                            className="ml-3"
+                        />
+                    </div>
                 </div>
             );
         }
 
         ReactDOM.render(<AudioPlayer />, document.getElementById('audioPlayerContainer'));
-        ReactDOM.render(<ChatApp />, document.getElementById('chatApp'));
+        ReactDOM.createRoot(document.getElementById('chatContainer')).render(<ChatApp />);
         ReactDOM.render(<ImageApp />, document.getElementById('imageApp'));
         ReactDOM.render(<ViewCount />, document.querySelector('#viewCount'));
     </script>
