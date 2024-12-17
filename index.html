@@ -220,7 +220,6 @@
         }
 
         function AudioPlayer() {
-            
             const playlist = [
                 'assets/audio1.webm',
                 'assets/audio2part1.webm',
@@ -228,37 +227,30 @@
             ];
 
             const [currentTrack, setCurrentTrack] = React.useState(Math.floor(Math.random() * playlist.length));
-            const [isPlaying, setIsPlaying] = React.useState(false); // État pour suivre la lecture/pause
+            const [isPlaying, setIsPlaying] = React.useState(false);
+            const [volume, setVolume] = React.useState(0.5); // Default volume to 50%
             const audioRef = React.useRef(null);
 
-            // Charge la piste actuelle
             React.useEffect(() => {
                 if (audioRef.current) {
-                    // Set the current track source
                     audioRef.current.src = playlist[currentTrack];
-                    
-                    // Load the metadata of the new track to get its duration
                     audioRef.current.onloadedmetadata = () => {
-                        // Ensure the duration is known before setting currentTime
                         if (audioRef.current.duration) {
                             const randomStartTime = Math.random() * audioRef.current.duration;
-                            audioRef.current.currentTime = randomStartTime; // Set to a random start time
+                            audioRef.current.currentTime = randomStartTime;
+                            audioRef.current.volume = volume; // Set the volume
                         }
                     };
-
-                    // Optionally play the track immediately
                     audioRef.current.play().catch((error) => {
                         console.error("Playback blocked:", error);
                     });
                 }
-            }, [currentTrack])
+            }, [currentTrack]); // Ce useEffect ne dépend plus que de currentTrack
 
-            // Passe à la piste suivante à la fin de la lecture
             const handleEnded = () => {
                 setCurrentTrack((prev) => (prev + 1) % playlist.length);
             };
 
-            // Toggle lecture/pause
             const togglePlay = () => {
                 if (audioRef.current) {
                     if (isPlaying) {
@@ -268,7 +260,15 @@
                             console.error("Lecture bloquée :", error);
                         });
                     }
-                    setIsPlaying(!isPlaying); // Met à jour l'état
+                    setIsPlaying(!isPlaying);
+                }
+            };
+
+            const handleVolumeChange = (event) => {
+                const newVolume = parseFloat(event.target.value);
+                setVolume(newVolume);
+                if (audioRef.current) {
+                    audioRef.current.volume = newVolume; // Mettre à jour le volume sans changer la source
                 }
             };
 
@@ -285,6 +285,15 @@
                     >
                         {isPlaying ? "🔇 Couper le son" : "🔈 Lancer le son"}
                     </button>
+                    <input
+                        type="range"
+                        min="0"
+                        max="1"
+                        step="0.01"
+                        value={volume}
+                        onChange={handleVolumeChange}
+                        className="ml-3"
+                    />
                 </div>
             );
         }
