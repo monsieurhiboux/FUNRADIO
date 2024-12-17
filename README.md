@@ -1,6 +1,6 @@
 ## FUN RADIO
 
-### A simple radio app for the web
+### A simple Fake radio app for the web
 
 ## Launch
 
