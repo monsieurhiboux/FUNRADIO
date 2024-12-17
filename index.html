@@ -9,11 +9,11 @@
     <script defer src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script defer src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
-<body class="bg-gray-900 text-gray-200 font-sans">
+<body class="bg-gray-900 text-gray-200 font-sans min">
     <!-- Conteneur principal -->
-    <div class="flex flex-col md:flex-row max-h-screen">
+    <div class="flex min-h-scren">
         <!-- Sidebar gauche -->
-        <aside class="w-64 bg-gray-800 p-4">
+        <div class="flex flex-col min-h-screen w-38 bg-gray-800 p-4">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-purple-400">FUN RADIO</h1>
             </div>
@@ -21,65 +21,128 @@
                 <ul class="space-y-4">
                     <li>
                         <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
-                            <span class="w-6 h-6 bg-gray-600 flex items-center justify-center rounded">🏠</span>
+                            <span class="w-6 h-6 flex items-center justify-center rounded">🏠</span>
                             <span>Accueil</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
-                            <span class="w-6 h-6 bg-gray-600 flex items-center justify-center rounded">🎥</span>
+                            <span class="w-6 h-6 flex items-center justify-center rounded">🎥</span>
                             <span>Vidéos</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
-                            <span class="w-6 h-6 bg-gray-600 flex items-center justify-center rounded">🗓️</span>
+                            <span class="w-6 h-6 flex items-center justify-center rounded">🗓️</span>
                             <span>Planning</span>
                         </a>
                     </li>
                     <li>
                         <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
-                            <span class="w-6 h-6 bg-gray-600 flex items-center justify-center rounded">💬</span>
+                            <span class="w-6 h-6 flex items-center justify-center rounded">💬</span>
                             <span>Chat</span>
                         </a>
                     </li>
                 </ul>
             </nav>
-        </aside>
+        </div>
 
         <!-- Contenu principal -->
-        <main class="flex bg-gray-900 flex-1">
+        <div class="flex bg-gray-900 flex-1">
             <!-- Image dynamique en React -->
             <!-- Infos sur le stream -->
-            <div class="p-4 border-b border-gray-700 flex-1 grow">
-                <div id="imageApp" class="aspect-video"></div>
-                <div class="flex flex-col md:flex-row md:items-center justify-between mt-3">
+            <div class="flex-1 grow">
+                <div class="relative">
+                    <div id="imageApp" class="aspect-video"></div>
+                    <div id="audioPlayerContainer" class="absolute bottom-4 left-4"></div>
+                </div>
+                <div class="flex flex-col md:flex-row md:items-center justify-between mt-3 border-b border-gray-700 m-4 pb-4">
                     <div>
                         <h2 class="text-2xl font-bold text-purple-400">FUN RADIO LIVE 24h/24 🔴</h2>
-                        <p id="viewCount" class="text-gray-400">RADIO | FUN RADIOFUN FUNRADIO RADIO INSUPPORTABLE | Nombre de vues : 1000</p>
+                        <p id="viewCount" class="text-gray-400">RADIO | FUN RADIOFUN FUNRADIO RADIO INSUPPORTABLE | Nombre de viewers : 1000</p>
                     </div>
                     <button class="mt-4 md:mt-0 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500">
-                        Suivre
+                        Vous êtes abonné·e à FUN RADIO
                     </button>
                 </div>
-                <div class="audio-player mt-4">
-                    <audio id="audioPlayer" controls autoplay ></audio>
-                </div>
             </div>
-
-            <!-- Chat et contenus liés -->
-            <div class="w-96 p-4 none mr-auto">
-                <!-- Chat avec React --> 
-                <div id="chatApp" class="bg-gray-800 p-4 rounded min-h-screen overflow-y-auto">
+        </div>
+        <div class="w-96 none">
+            <!-- Chat avec React --> 
+            <div id="chatApp"></div>
+        </div>
     </div>
+
 
     <script type="text/babel">
         const messages = [
-            { pseudo: "DJMax", text: "Salut tout le monde!" },
-            { pseudo: "FanDeHits", text: "Génial ce stream!" },
-            { pseudo: "MusicLover87", text: "Quelqu'un a le nom de la musique?" },
-            { pseudo: "DanceFloorKing", text: "Let's gooooo 🔥" },
-            { pseudo: "HitHunter", text: "Incroyable !" }
+            { pseudo: "DJMax", color: "#FF5733", text: "Salut tout le monde!" },
+            { pseudo: "FanDeHits", color: "#33FF57", text: "Génial ce stream!" },
+            { pseudo: "MusicLover87", color: "#5733FF", text: "Quelqu'un a le nom de la musique?" },
+            { pseudo: "DanceFloorKing", color: "#FF33A8", text: "Let's gooooo 🔥" },
+            { pseudo: "HitHunter", color: "#A833FF", text: "Incroyable !" },
+            { pseudo: "BassMaster", color: "#33CFFF", text: "Boom Boom Bass 🎧" },
+            { pseudo: "ElectroVibes", color: "#FFC300", text: "Cette vibe est folle!" },
+            { pseudo: "NightRider", color: "#DAF7A6", text: "Allons jusqu'au bout de la nuit!" },
+            { pseudo: "PlaylistAddict", color: "#C70039", text: "Direct dans ma playlist!" },
+            { pseudo: "RaveQueen", color: "#581845", text: "On bouge tous!" },
+            { pseudo: "DJMarkus", color: "#900C3F", text: "Du lourd ce son 🔥" },
+            { pseudo: "LoudAndProud", color: "#1ABC9C", text: "On monte le volume!" },
+            { pseudo: "BeatCrusher", color: "#2E4053", text: "Ce beat est monstrueux!" },
+            { pseudo: "FunStreamer", color: "#F39C12", text: "Merci pour ce live 🎶" },
+            { pseudo: "TranceLover", color: "#9B59B6", text: "Ce son, une dinguerie!" },
+            { pseudo: "PartyStarter", color: "#5DADE2", text: "On lance la soirée!" },
+            { pseudo: "Dance4Life", color: "#D35400", text: "Je danse seul chez moi 💃" },
+            { pseudo: "WaveRider", color: "#7D3C98", text: "Les ondes sont parfaites!" },
+            { pseudo: "MixMaster77", color: "#28B463", text: "Qui mixe ce soir ?" },
+            { pseudo: "GrooveAddict", color: "#E74C3C", text: "Impossible de rester assis!" },
+            { pseudo: "SoundHunter", color: "#9C640C", text: "Nouvelle pépite découverte!" },
+            { pseudo: "ClubKing", color: "#2471A3", text: "Club mode ON!" },
+            { pseudo: "ElectroZed", color: "#D5DBDB", text: "C’est quoi ce feu 🔥🔥" },
+            { pseudo: "BassAddict99", color: "#6E2C00", text: "Le drop m'a tué 😱" },
+            { pseudo: "HitCraver", color: "#45B39D", text: "La soirée commence ici!" },
+            { pseudo: "NightDancer", color: "#AED6F1", text: "On lâche rien!" },
+            { pseudo: "EnergyVibes", color: "#C0392B", text: "Que de l'énergie!" },
+            { pseudo: "StreamAddict", color: "#7FB3D5", text: "Stream au top comme d'hab!" },
+            { pseudo: "MusicGod", color: "#8E44AD", text: "Trop bon!" },
+            { pseudo: "TheDropper", color: "#3498DB", text: "Le drop !!! 💣" },
+            { pseudo: "ClubQueen", color: "#2ECC71", text: "Les pieds dans le rythme!" },
+            { pseudo: "VibeSensation", color: "#B7950B", text: "Vibes à fond!" },
+            { pseudo: "FunDJMax", color: "#A04000", text: "Fun Radio en force!" },
+            { pseudo: "RaveManiac", color: "#F7DC6F", text: "La rave commence!" },
+            { pseudo: "DuoGroove", color: "#B03A2E", text: "Du bon groove ce soir 🎶" },
+            { pseudo: "HypeBass", color: "#1F618D", text: "On veut plus de basses!" },
+            { pseudo: "NightWolf", color: "#D7BDE2", text: "Hurlons à la lune!" },
+            { pseudo: "SoundKing", color: "#85C1E9", text: "La musique est reine!" },
+            { pseudo: "PartyCraver", color: "#7E5109", text: "Encore un son comme ça!" },
+            { pseudo: "DreamBass", color: "#A3E4D7", text: "Le son de mes rêves!" },
+            { pseudo: "RushVibes", color: "#2980B9", text: "Ça monte, ça monte! 🚀" },
+            { pseudo: "SilentRaver", color: "#212F3C", text: "Casque sur les oreilles 💀" },
+            { pseudo: "TwerkMachine", color: "#AF7AC5", text: "Ça twerk ici?" },
+            { pseudo: "NightDJ", color: "#7DCEA0", text: "DJ, envoie du lourd!" },
+            { pseudo: "ElectroPulse", color: "#C0392B", text: "Les pulsations électriques!" },
+            { pseudo: "BeatSlayer", color: "#1C2833", text: "Quel massacre ce beat!" },
+            { pseudo: "HouseHero", color: "#D98880", text: "La house est reine ici!" },
+            { pseudo: "FunkyFresh", color: "#7B241C", text: "Fraîcheur musicale!" },
+            { pseudo: "DropHunter", color: "#F0B27A", text: "On guette le prochain drop!" },
+            { pseudo: "FunElectro", color: "#C0392B", text: "Que des hits ici!" },
+            { pseudo: "UltraRaver", color: "#A93226", text: "On ne dort pas ce soir!" },
+            { pseudo: "VibraDancer", color: "#EC7063", text: "Vibrez avec moi!" },
+            { pseudo: "SoulGroover", color: "#1ABC9C", text: "Groove dans l'âme!" },
+            { pseudo: "ClubStorm", color: "#884EA0", text: "Tempête sur le dancefloor!" },
+            { pseudo: "WaveMachine", color: "#3498DB", text: "Toujours plus de sons!" },
+            { pseudo: "MegaBass", color: "#2E86C1", text: "Les voisins s'énervent déjà 😂" },
+            { pseudo: "LightItUp", color: "#B7950B", text: "On allume tout ce soir!" },
+            { pseudo: "ElectroKnight", color: "#17202A", text: "Le chevalier des platines!" },
+            { pseudo: "NightPulse", color: "#9B59B6", text: "Pulse nocturne 💓" },
+            { pseudo: "DanceHero", color: "#7D3C98", text: "En mode héros de la danse!" },
+            { pseudo: "HitRider", color: "#58D68D", text: "En route pour les hits!" },
+            { pseudo: "JumpMaster", color: "#B9770E", text: "On saute tous ensemble!" },
+            { pseudo: "VibeBooster", color: "#212F3D", text: "La soirée explose!" },
+            { pseudo: "PartyWizard", color: "#A04000", text: "De la magie sonore!" },
+            { pseudo: "EnergyCrush", color: "#E59866", text: "Tout cramer niveau énergie!" },
+            { pseudo: "SoundBlaster", color: "#7B7D7D", text: "La vibe nous tue!" },
+            { pseudo: "DanceMachine", color: "#82E0AA", text: "La machine est lancée!" },
         ];
 
         function ChatApp() {
@@ -88,19 +151,25 @@
                 const interval = setInterval(() => {
                     const newMessage = messages[Math.floor(Math.random() * messages.length)];
                     setChatMessages(prev => [
-                        ...prev.slice(-15),
-                        `${newMessage.pseudo} : ${newMessage.text}`
+                        ...prev.slice(),
+                        {
+                            pseudo: newMessage.pseudo,
+                            text: newMessage.text,
+                            color: newMessage.color
+                        }
                     ]);
                 }, 800);
                 return () => clearInterval(interval);
             }, []);
 
             return (
-                <div>
-                    <h3 className="text-lg font-bold mb-4 text-purple-400">Chat en direct</h3>
-                    <div className="flex-1 overflow-y-auto bg-gray-900 p-2 rounded">
-                        {chatMessages.map((msg, index) => (
-                            <div key={index} className="text-gray-400">{msg}</div>
+                <div className="flex-1 overflow-y-auto max-h-screen">
+                    <h3 className="bg-gray-900 text-lg font-bold mb-2 text-purple-400 border-b border-gray-700 p-2 text-center sticky top-0">Chat en direct</h3>
+                    <div className="flex-1 rounded p-2 px-4">
+                       {chatMessages.map((msg, index) => (
+                            <div key={index} className="my-1" >
+                                <span style={{ color: msg.color }}>{msg.pseudo}</span> : {msg.text}
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -129,7 +198,7 @@
             const [views, setViews] = React.useState(1000);
             React.useEffect(() => {
                 const interval = setInterval(() => {
-                    setViews(prev => prev + 1);
+                    setViews(prev => prev + 12);
                 }, 1000);
                 return () => clearInterval(interval);
             }, []);
@@ -139,27 +208,77 @@
             );
         }
 
-         // Audio playlist functionality
-        const audioPlayer = document.getElementById('audioPlayer');
-        const playlist = [
-            'assets/audio1.mp3',
-            'assets/audio2.mp3'
-        ];
-        let currentTrack = 0;
+        function AudioPlayer() {
+            
+            const playlist = [
+                'assets/audio1.webm',
+                'assets/audio2part1.webm',
+                'assets/audio2part2.webm'
+            ];
 
-        function loadTrack(index) {
-            audioPlayer.src = playlist[index];
-            audioPlayer.play();
+            const [currentTrack, setCurrentTrack] = React.useState(Math.floor(Math.random() * playlist.length));
+            const [isPlaying, setIsPlaying] = React.useState(false); // État pour suivre la lecture/pause
+            const audioRef = React.useRef(null);
+
+            // Charge la piste actuelle
+            React.useEffect(() => {
+                if (audioRef.current) {
+                    // Set the current track source
+                    audioRef.current.src = playlist[currentTrack];
+                    
+                    // Load the metadata of the new track to get its duration
+                    audioRef.current.onloadedmetadata = () => {
+                        // Ensure the duration is known before setting currentTime
+                        if (audioRef.current.duration) {
+                            const randomStartTime = Math.random() * audioRef.current.duration;
+                            audioRef.current.currentTime = randomStartTime; // Set to a random start time
+                        }
+                    };
+
+                    // Optionally play the track immediately
+                    audioRef.current.play().catch((error) => {
+                        console.error("Playback blocked:", error);
+                    });
+                }
+            }, [currentTrack])
+
+            // Passe à la piste suivante à la fin de la lecture
+            const handleEnded = () => {
+                setCurrentTrack((prev) => (prev + 1) % playlist.length);
+            };
+
+            // Toggle lecture/pause
+            const togglePlay = () => {
+                if (audioRef.current) {
+                    if (isPlaying) {
+                        audioRef.current.pause();
+                    } else {
+                        audioRef.current.play().catch((error) => {
+                            console.error("Lecture bloquée :", error);
+                        });
+                    }
+                    setIsPlaying(!isPlaying); // Met à jour l'état
+                }
+            };
+
+            return (
+                <div className="audio-player mt-4">
+                    <audio
+                        ref={audioRef}
+                        onEnded={handleEnded}
+                        className="w-full"
+                    />
+                    <button
+                        onClick={togglePlay}
+                        className="mt-4 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500"
+                    >
+                        {isPlaying ? "🔇 Couper le son" : "🔈 Lancer le son"}
+                    </button>
+                </div>
+            );
         }
 
-        audioPlayer.addEventListener('ended', () => {
-            currentTrack = (currentTrack + 1) % playlist.length;
-            loadTrack(currentTrack);
-        });
-
-        // Load and start the first track
-        loadTrack(currentTrack);
-
+        ReactDOM.render(<AudioPlayer />, document.getElementById('audioPlayerContainer'));
         ReactDOM.render(<ChatApp />, document.getElementById('chatApp'));
         ReactDOM.render(<ImageApp />, document.getElementById('imageApp'));
         ReactDOM.render(<ViewCount />, document.querySelector('#viewCount'));
