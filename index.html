@@ -8,6 +8,7 @@
     <script defer src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script defer src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script defer src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
 </head>
 <body class="bg-gray-900 text-gray-200 font-sans min">
     <!-- Conteneur principal -->
@@ -75,101 +76,73 @@
 
 
     <script type="text/babel">
-        const messages = [
-            { pseudo: "DJMax", color: "#FF5733", text: "Salut tout le monde!" },
-            { pseudo: "FanDeHits", color: "#33FF57", text: "Génial ce stream!" },
-            { pseudo: "MusicLover87", color: "#5733FF", text: "Quelqu'un a le nom de la musique?" },
-            { pseudo: "DanceFloorKing", color: "#FF33A8", text: "Let's gooooo 🔥" },
-            { pseudo: "HitHunter", color: "#A833FF", text: "Incroyable !" },
-            { pseudo: "BassMaster", color: "#33CFFF", text: "Boom Boom Bass 🎧" },
-            { pseudo: "ElectroVibes", color: "#FFC300", text: "Cette vibe est folle!" },
-            { pseudo: "NightRider", color: "#DAF7A6", text: "Allons jusqu'au bout de la nuit!" },
-            { pseudo: "PlaylistAddict", color: "#C70039", text: "Direct dans ma playlist!" },
-            { pseudo: "RaveQueen", color: "#581845", text: "On bouge tous!" },
-            { pseudo: "DJMarkus", color: "#900C3F", text: "Du lourd ce son 🔥" },
-            { pseudo: "LoudAndProud", color: "#1ABC9C", text: "On monte le volume!" },
-            { pseudo: "BeatCrusher", color: "#2E4053", text: "Ce beat est monstrueux!" },
-            { pseudo: "FunStreamer", color: "#F39C12", text: "Merci pour ce live 🎶" },
-            { pseudo: "TranceLover", color: "#9B59B6", text: "Ce son, une dinguerie!" },
-            { pseudo: "PartyStarter", color: "#5DADE2", text: "On lance la soirée!" },
-            { pseudo: "Dance4Life", color: "#D35400", text: "Je danse seul chez moi 💃" },
-            { pseudo: "WaveRider", color: "#7D3C98", text: "Les ondes sont parfaites!" },
-            { pseudo: "MixMaster77", color: "#28B463", text: "Qui mixe ce soir ?" },
-            { pseudo: "GrooveAddict", color: "#E74C3C", text: "Impossible de rester assis!" },
-            { pseudo: "SoundHunter", color: "#9C640C", text: "Nouvelle pépite découverte!" },
-            { pseudo: "ClubKing", color: "#2471A3", text: "Club mode ON!" },
-            { pseudo: "ElectroZed", color: "#D5DBDB", text: "C’est quoi ce feu 🔥🔥" },
-            { pseudo: "BassAddict99", color: "#6E2C00", text: "Le drop m'a tué 😱" },
-            { pseudo: "HitCraver", color: "#45B39D", text: "La soirée commence ici!" },
-            { pseudo: "NightDancer", color: "#AED6F1", text: "On lâche rien!" },
-            { pseudo: "EnergyVibes", color: "#C0392B", text: "Que de l'énergie!" },
-            { pseudo: "StreamAddict", color: "#7FB3D5", text: "Stream au top comme d'hab!" },
-            { pseudo: "MusicGod", color: "#8E44AD", text: "Trop bon!" },
-            { pseudo: "TheDropper", color: "#3498DB", text: "Le drop !!! 💣" },
-            { pseudo: "ClubQueen", color: "#2ECC71", text: "Les pieds dans le rythme!" },
-            { pseudo: "VibeSensation", color: "#B7950B", text: "Vibes à fond!" },
-            { pseudo: "FunDJMax", color: "#A04000", text: "Fun Radio en force!" },
-            { pseudo: "RaveManiac", color: "#F7DC6F", text: "La rave commence!" },
-            { pseudo: "DuoGroove", color: "#B03A2E", text: "Du bon groove ce soir 🎶" },
-            { pseudo: "HypeBass", color: "#1F618D", text: "On veut plus de basses!" },
-            { pseudo: "NightWolf", color: "#D7BDE2", text: "Hurlons à la lune!" },
-            { pseudo: "SoundKing", color: "#85C1E9", text: "La musique est reine!" },
-            { pseudo: "PartyCraver", color: "#7E5109", text: "Encore un son comme ça!" },
-            { pseudo: "DreamBass", color: "#A3E4D7", text: "Le son de mes rêves!" },
-            { pseudo: "RushVibes", color: "#2980B9", text: "Ça monte, ça monte! 🚀" },
-            { pseudo: "SilentRaver", color: "#212F3C", text: "Casque sur les oreilles 💀" },
-            { pseudo: "TwerkMachine", color: "#AF7AC5", text: "Ça twerk ici?" },
-            { pseudo: "NightDJ", color: "#7DCEA0", text: "DJ, envoie du lourd!" },
-            { pseudo: "ElectroPulse", color: "#C0392B", text: "Les pulsations électriques!" },
-            { pseudo: "BeatSlayer", color: "#1C2833", text: "Quel massacre ce beat!" },
-            { pseudo: "HouseHero", color: "#D98880", text: "La house est reine ici!" },
-            { pseudo: "FunkyFresh", color: "#7B241C", text: "Fraîcheur musicale!" },
-            { pseudo: "DropHunter", color: "#F0B27A", text: "On guette le prochain drop!" },
-            { pseudo: "FunElectro", color: "#C0392B", text: "Que des hits ici!" },
-            { pseudo: "UltraRaver", color: "#A93226", text: "On ne dort pas ce soir!" },
-            { pseudo: "VibraDancer", color: "#EC7063", text: "Vibrez avec moi!" },
-            { pseudo: "SoulGroover", color: "#1ABC9C", text: "Groove dans l'âme!" },
-            { pseudo: "ClubStorm", color: "#884EA0", text: "Tempête sur le dancefloor!" },
-            { pseudo: "WaveMachine", color: "#3498DB", text: "Toujours plus de sons!" },
-            { pseudo: "MegaBass", color: "#2E86C1", text: "Les voisins s'énervent déjà 😂" },
-            { pseudo: "LightItUp", color: "#B7950B", text: "On allume tout ce soir!" },
-            { pseudo: "ElectroKnight", color: "#17202A", text: "Le chevalier des platines!" },
-            { pseudo: "NightPulse", color: "#9B59B6", text: "Pulse nocturne 💓" },
-            { pseudo: "DanceHero", color: "#7D3C98", text: "En mode héros de la danse!" },
-            { pseudo: "HitRider", color: "#58D68D", text: "En route pour les hits!" },
-            { pseudo: "JumpMaster", color: "#B9770E", text: "On saute tous ensemble!" },
-            { pseudo: "VibeBooster", color: "#212F3D", text: "La soirée explose!" },
-            { pseudo: "PartyWizard", color: "#A04000", text: "De la magie sonore!" },
-            { pseudo: "EnergyCrush", color: "#E59866", text: "Tout cramer niveau énergie!" },
-            { pseudo: "SoundBlaster", color: "#7B7D7D", text: "La vibe nous tue!" },
-            { pseudo: "DanceMachine", color: "#82E0AA", text: "La machine est lancée!" },
-        ];
-
         function ChatApp() {
             const [chatMessages, setChatMessages] = React.useState([]);
             const chatEndRef = React.useRef(null);
+            const [csvData, setCsvData] = React.useState([]);
 
-            // Add this useEffect to scroll to the bottom whenever chatMessages changes
+            // Function to load and parse the CSV
+            const fetchMessagesFromCSV = () => {
+                Papa.parse("assets/message.csv", {
+                    download: true,
+                    header: true,
+                    complete: (result) => {
+                        const parsedData = result.data.map(row => ({
+                            pseudo: row.pseudo,
+                            text: row.text,
+                            color: row.color,
+                        }));
+                        setCsvData(parsedData); // Save CSV data into a state
+                    },
+                    error: (error) => {
+                        console.error("Erreur de chargement du fichier CSV :", error.message);
+                    }
+                });
+            };
+
+            React.useEffect(() => {
+                fetchMessagesFromCSV(); // Load messages on component mount
+            }, []);
+
+            React.useEffect(() => {
+                let interval;
+
+                const postBurstOfMessages = () => {
+                    const burstCount = Math.floor(Math.random() * 5) + 3; // Random burst of 3 to 7 messages
+                    setChatMessages(prev => {
+                        const newMessages = [];
+                        for (let i = 0; i < burstCount; i++) {
+                            if (csvData.length > 0) {
+                                const randomMessage = csvData[Math.floor(Math.random() * csvData.length)];
+                                newMessages.push({
+                                    pseudo: randomMessage.pseudo,
+                                    text: randomMessage.text,
+                                    color: randomMessage.color
+                                });
+                            }
+                        }
+                        return [...prev, ...newMessages];
+                    });
+                };
+
+                const scheduleNextBurst = () => {
+                    const randomDelay = Math.random() * (3000 - 200) + 200; // Random delay between 200ms and 3000ms
+                    interval = setTimeout(() => {
+                        postBurstOfMessages();
+                        scheduleNextBurst(); // Schedule the next burst
+                    }, randomDelay);
+                };
+
+                scheduleNextBurst(); // Initiate the first burst
+
+                return () => clearTimeout(interval); // Clean up the timeout on component unmount
+            }, [csvData]); // Depend on csvData to ensure messages are available
+
             React.useEffect(() => {
                 if (chatEndRef.current) {
                     chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
                 }
             }, [chatMessages]);
-
-            React.useEffect(() => {
-                const interval = setInterval(() => {
-                    const newMessage = messages[Math.floor(Math.random() * messages.length)];
-                    setChatMessages(prev => [
-                        ...prev.slice(),
-                        {
-                            pseudo: newMessage.pseudo,
-                            text: newMessage.text,
-                            color: newMessage.color
-                        }
-                    ]);
-                }, 800);
-                return () => clearInterval(interval);
-            }, []);
 
             return (
                 <div className="flex-1 overflow-y-auto max-h-screen">
@@ -294,10 +267,11 @@
                     </button>
                     <button
                         onClick={changeRandomTrack}
-                        className="mt-4 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500 ml-3"
+                        className="mt-4 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500 ml-3 mr-3"
                     >
                         ⏱️ Changer de ligne temporelle
                     </button>
+                    🔊
                     <input
                         type="range"
                         min="0"
