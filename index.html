@@ -13,56 +13,29 @@
 <body class="bg-gray-900 text-gray-200 font-sans min">
     <!-- Conteneur principal -->
     <div class="flex flex-col lg:flex-row min-h-screen">
-        <!-- Sidebar gauche - Visible uniquement sur desktop -->
-        <div class="hidden lg:flex flex-col w-38 bg-gray-800 p-4">
-            <div class="mb-6">
-                <h1 class="text-2xl font-bold text-purple-400">PUFF RADIO</h1>
-            </div>
-            <nav>
-                <ul class="space-y-4">
-                    <li>
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
-                            <span class="w-6 h-6 flex items-center justify-center rounded">🏠</span>
-                            <span>Accueil</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
-                            <span class="w-6 h-6 flex items-center justify-center rounded">🎥</span>
-                            <span>Vidéos</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
-                            <span class="w-6 h-6 flex items-center justify-center rounded">🗓️</span>
-                            <span>Planning</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center space-x-3 text-gray-300 hover:text-white">
-                            <span class="w-6 h-6 flex items-center justify-center rounded">💬</span>
-                            <span>Chat</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-
         <!-- Contenu principal -->
         <div class="flex flex-col flex-1">
             <!-- Image dynamique et audio player -->
             <div class="relative">
+                <div class="absolute top-4 left-4 bg-white rounded p-2 py-1 shadow-md">
+                    <h1 class="text-2xl font-bold text-purple-400">PUFF RADIO</h1>
+                </div>
                 <div id="imageApp" class="aspect-video"></div>
                 <div id="audioPlayerContainer" class="absolute bottom-4 left-4"></div>
             </div>
 
             <!-- Infos sur le stream -->
-            <div class="p-4">
-                <h2 class="text-2xl font-bold text-purple-400 text-center lg:text-left">PUFF RADIO LIVE 24h/24 🔴</h2>
-                <p class="text-gray-400 text-center lg:text-left">
-                    RADIO | PUFF RADIO | Nombre de viewers :
-                    <span class="font-bold text-purple-400" id="viewCount">1000</span>
-                </p>
+            <div class="p-4 flex flex-col lg:flex-row">
+                <div>
+                    <h2 class="text-2xl font-bold text-purple-400 text-center lg:text-left">PUFF RADIO LIVE 24h/24 🔴</h2>
+                    <p class="text-gray-400 text-center lg:text-left">
+                        RADIO | PUFF RADIO | Nombre de viewers :
+                        <span class="font-bold text-purple-400" id="viewCount">1000</span>
+                    </p>
+                </div>
+                <button class="lg-mt-0 mt-4 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500 lg:mt-0 lg:ml-auto ">
+                    Vous êtes abonné·e à PUFF RADIO
+                </button>
             </div>
         </div>
 
@@ -260,17 +233,17 @@
                     />
                     <button
                         onClick={togglePlay}
-                        className="mt-4 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500"
+                        className="mt-4 bg-purple-600 px-3 py-2 rounded text-white hover:bg-purple-500"
                     >
                         {isPlaying ? "🔇 Couper le son" : "🔈 Lancer le son"}
                     </button>
                     <button
                         onClick={changeRandomTrack}
-                        className="mt-4 bg-purple-600 px-4 py-2 rounded text-white hover:bg-purple-500 ml-3 mr-3"
+                        className="mt-4 bg-purple-600 px-3 py-2 rounded text-white hover:bg-purple-500 ml-3 mr-3"
                     >
                         ⏱️ Changer de ligne temporelle
                     </button>
-                    <div className="mt-4 lg:mt-'">
+                    <div className="mt-4 items-center bg-gray-600 inline-flex px-3 py-2 rounded">
                         🔊
                         <input
                             type="range"
